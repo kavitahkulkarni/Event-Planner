@@ -358,16 +358,16 @@
     $('#signup-form').validate({ // initialize plugin
     ignore:":not(:visible)",
       rules: {
-        "new-user-name": {
+        "name": {
           required: true,
           minlength: 4
         },
-        "new-user-email": {
+        "email": {
           required: true,
           email: true,
           emailCheck: true
         },
-        "confirm-new-user-email": {
+        "email": {
           required: true,
           equalTo: "#new-user-email",
           email: true,
@@ -380,15 +380,15 @@
         }
       },
       messages: {
-        'new-user-name': {
+        'name': {
           required: "Please enter the User Name",
           minlength: "User Name should be at least 4 characters"
         },
-        'new-user-email': {
+        'email': {
           required: "Please enter an email",
           email: "Please enter valid email"
         },
-        'confirm-new-user-email': {
+        'emailC': {
           required: "Please enter the email again",
           equalTo: "Should be same as the email above",
           email: "Please enter valid email"
