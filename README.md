@@ -18,10 +18,9 @@ Please feel free to provide your experience and feedback.
 
 ##Installing from Source
 
-  - Clone this repo
-  - npm install - install dependencies
-  - Run "gulp build" to build the project
-  - Host over localhost and open dest/index.html in your browser
+  - Clone/download this repository
+  - Run `npm install` to install dependencies
+  - Host over localhost and open dist/index.html in your browser
   
 ##Submitting an issue
 You can use the [gittHub issue tracker](https://github.com/kavitahkulkarni/Event-Planner/issues) to track bugs and features. When submitting a bug report, please include as much details as possible. Before submitting a bug report or feature request, check to make sure it hasn't already been submitted. 
