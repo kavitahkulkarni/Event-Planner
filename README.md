@@ -16,11 +16,18 @@ The desictribution code is in "dist" folder.
 
 Please feel free to provide your experience and feedback.
 
-##Installing from Source
+##Usage
 
-  - Clone/download this repository
-  - Run `npm install` to install dependencies
-  - Host over localhost and open dist/index.html in your browser
+###Development environment:
+    - Clone/download this repository
+    - Run `npm install` to install dependencies
+    - Run `gulp` to build and serve the application on localhost
+    - Everytime you save the changes in source code, changes are reflected in the browser
+
+###Build and run in production environment:
+    - Clone/download this repository
+    - Run `npm install` to install dependencies
+    - Run `gulp serve:dist` to build and serve the application on localhost
   
 ##Submitting an issue
 You can use the [gittHub issue tracker](https://github.com/kavitahkulkarni/Event-Planner/issues) to track bugs and features. When submitting a bug report, please include as much details as possible. Before submitting a bug report or feature request, check to make sure it hasn't already been submitted. 
