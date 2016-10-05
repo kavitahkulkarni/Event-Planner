@@ -80,3 +80,13 @@ gulp.task('build', function (callback) {
     callback
   )
 })
+
+// starts a production server
+// runs the build task before,
+// and serves the dist folder
+gulp.task('serve:dist', ['build'], function () {
+  browserSync.init({
+    server: {
+      baseDir: 'dist'
+    },
+  })});
