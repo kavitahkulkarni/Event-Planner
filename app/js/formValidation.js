@@ -136,6 +136,15 @@
         // Check validation
         if($("#event-form").valid()){
           widget.show();
+          if(current == 0) {
+            document.getElementById("new-event-name").focus();
+          }
+          else if(current == 1) {
+            document.getElementById("new-event-start-date").focus();
+          }
+          else if (current == 2) {
+            document.getElementById("new-event-location").focus();
+          }
           widget.not(':eq('+(current++)+')').hide();
           setProgress(current);
         }
@@ -148,6 +157,15 @@
         current = current - 2;
         if(current < widget.length){
           widget.show();
+          if(current == 0) {
+            document.getElementById("new-event-name").focus();
+          }
+          else if(current == 1) {
+            document.getElementById("new-event-start-date").focus();
+          }
+          else if (current == 2) {
+            document.getElementById("new-event-location").focus();
+          }
           widget.not(':eq('+(current++)+')').hide();
           setProgress(current);
         }
@@ -232,7 +250,6 @@
       }
     });
     $.validator.addMethod("timeCheck", function(value, element) {
-      //console.log("in timecheck" + value);
       return this.optional(element) || /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/i.test(value);
     }, "Please enter a valid time.");
     /* change the select value to an integer to add to unix time of date from datepicker*/
@@ -268,15 +285,11 @@
       var currentdate = new Date();
       currentdate.setHours(0,0,0,0);
       // Return false if start date it in past
-      //console.log(parseDate(startdatevalue) + "=" + currentdate);
       if (parseDate(startdatevalue) < currentdate) {
-        //console.log("in if..");
         return false;
       } else if (parseDate(startdatevalue) > currentdate){
-        //console.log("in else if..");
         return true;
       } else {
-        //console.log("in else..");
         var startHour = parseInt(starttimevalue.substr(0,2));
         var startMin = parseInt(starttimevalue.substr(3,2));
         var currentHour = currentdatetime.getHours();
