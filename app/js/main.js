@@ -48,6 +48,11 @@ var recentMenuButton = document.getElementById('menu-recent');
 var myEventsMenuButton = document.getElementById('menu-my-events');
 var myTopEventsMenuButton = document.getElementById('menu-my-top-events');
 var listeningFirebaseRefs = [];
+var current = 1;
+var widget      = $(".step");
+var btnnext     = $(".next");
+var btnback     = $(".back");
+var btnsubmit   = $(".create");
 
 /**
  * Saves a new event to the Firebase DB.
@@ -166,7 +171,7 @@ function createEventElement(eventId, eventName, eventType, eventHost, eventStart
   eventElement.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
   eventElement.getElementsByClassName('eventType')[0].innerText = 'Event Type: ' + eventType;
   eventElement.getElementsByClassName('eventHost')[0].innerText = 'Event Host: ' + eventHost;
-    eventElement.getElementsByClassName('eventStartDateTime')[0].innerText = 'Start Date: ' + eventStartDate + ' Time: ' + eventStartTime;
+  eventElement.getElementsByClassName('eventStartDateTime')[0].innerText = 'Start Date: ' + eventStartDate + ' Time: ' + eventStartTime;
   eventElement.getElementsByClassName('eventEndDateTime')[0].innerText = 'End Date: ' + eventEndDate + ' Time: ' + eventEndTime;
   eventElement.getElementsByClassName('eventLocation')[0].innerText = 'Location: ' + eventLocation;
   eventElement.getElementsByClassName('eventGuests')[0].innerText = 'Guests: ' + eventGuests;
@@ -413,7 +418,6 @@ function showSection(sectionElement, buttonElement) {
 // Bindings on load.
 window.addEventListener('load', function() {
   // Bind Sign in button.
-  //signInButton.addEventListener('click', function() {
   welcomeForm.onsubmit = function(e) {
     e.preventDefault();
     var email = emailInput.value;
@@ -437,7 +441,6 @@ window.addEventListener('load', function() {
       // [END authwithemail]
       }
   };
-
 
   // Bind Sign up button.
     signupForm.onsubmit = function(e) {
@@ -463,10 +466,7 @@ window.addEventListener('load', function() {
       }
     });
   }
-    // [END createwithemail]
- // });
 };
-
 
   // Send password reset email to user
   passwordResetButton .addEventListener('click', function() {
@@ -502,6 +502,10 @@ window.addEventListener('load', function() {
     var eventGuests = eventGuestsInput.value;
     var eventMessage = eventMessageInput.value;
 
+      current = 1;
+      hideButtons(current);
+      setProgress(current);
+
     // Reset the event form to show
     // first section of the form
     eventFormStep4.style.display = 'none';
@@ -535,10 +539,97 @@ window.addEventListener('load', function() {
   myTopEventsMenuButton.onclick = function() {
     showSection(topUserEventsSection, myTopEventsMenuButton);
   };
+
+  //Set the progress of event form
+  var setProgress = function(currstep){
+    var widthPercent;
+    var percent = parseFloat(100 / widget.length) * (currstep -1 );
+    if (percent == 0) {
+      widthPercent = 5;
+    } else {
+      widthPercent = percent;
+    }
+    percent = percent.toFixed();
+    $(".progress-bar").css("width", widthPercent+"%").html(percent + "%");
+  }
+
+  // Hide buttons according to the current step
+  var hideButtons = function(current){
+    var limit = parseInt(widget.length);
+    $(".action").hide();
+    if(current < limit) btnnext.show();
+    if(current > 1) btnback.show();
+    if (current == limit) {
+      // Show entered values
+      $(".display label.lbl").each(function(){
+        $(this).html($("#"+$(this).data("id")).val());
+      });
+      btnnext.hide();
+      btnsubmit.show();
+    }
+  }
+  //Add new event button
   addButton.onclick = function() {
     showSection(addEvent);
-    eventMessageInput.value = '';
     eventNameInput.value = '';
+    eventTypeInput.value = '';
+    eventHostInput.value = '';
+    eventStartDateInput.value = '';
+    eventStartTimeInput.value = '';
+    eventEndDateInput.value = '';
+    eventEndTimeInput.value = '';
+    eventLocationInput.value = '';
+    eventGuestsInput.value = '';
+    eventMessageInput.value = '';
+    $("#event-form").validate().resetForm();
+    current = 1;
+    // Init buttons and UI
+    widget.show();
+    document.getElementById("new-event-name").focus();
+    widget.not(':eq(0)').hide();
+    hideButtons(current);
+    setProgress(current);
   };
+  // Next button click action
+  btnnext.click(function(){
+    if(current < widget.length){
+      if($("#event-form").valid()){
+        widget.show();
+        if(current == 0) {
+          document.getElementById("new-event-name").focus();
+        }
+        else if(current == 1) {
+          document.getElementById("new-event-start-date").focus();
+        }
+        else if (current == 2) {
+          document.getElementById("new-event-location").focus();
+        }
+        widget.not(':eq('+(current++)+')').hide();
+        setProgress(current);
+      }
+    }
+    hideButtons(current);
+  });
+  // Back button click action
+  btnback.click(function(){
+    if(current > 1){
+      current = current - 2;
+      if(current < widget.length){
+        widget.show();
+        if(current == 0) {
+          document.getElementById("new-event-name").focus();
+        }
+        else if(current == 1) {
+          document.getElementById("new-event-start-date").focus();
+        }
+        else if (current == 2) {
+          document.getElementById("new-event-location").focus();
+        }
+        widget.not(':eq('+(current++)+')').hide();
+        setProgress(current);
+      }
+    }
+    hideButtons(current);
+  });
   recentMenuButton.onclick();
 }, false);
